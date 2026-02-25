@@ -1,8 +1,8 @@
 name: Plugin Check Stats
 
 on:
-  #schedule:
-  #  - cron: '* * * * *'
+  schedule:
+    - cron: '0 12 * * 0'
   workflow_dispatch:
 
 permissions: {}
@@ -14,8 +14,22 @@ jobs:
       fail-fast: false
       matrix:
         plugin_slug:
-          - pods-alternative-cache
-          - pods-gravity-forms
+          - advanced-custom-field
+          - custom-post-type-ui
+          - meta-box
+          - cmb2
+          - pods
+          - secure-custom-fields
+          - smart-custom-fields
+          - simple-tags
+          - custom-field-template
+          - wck-custom-fields-and-custom-post-types-creator
+          - post-types-unlimited
+          - cubewp-framework
+          - custom-post-types
+          - simple-cpt
+          - easy-post-types-fields
+          - acpt-lite
     steps:
       - name: Download plugin from WordPress.org
         run: |
