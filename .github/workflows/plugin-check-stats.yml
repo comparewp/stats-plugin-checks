@@ -41,35 +41,35 @@ jobs:
             "https://comparewp.org/plugin-check-api/${{ matrix.plugin_slug }}/" || true
             
           curl --fail-with-body -X POST \
-             -H "Content-Type: application/json" -d \
-            '{"skctest":"1"}' \
-            "https://comparewp.org/plugin-check-api/${{ matrix.plugin_slug }}-1/?api_key=$COMPAREWPORG_API_KEY&skctest=1" || true
+             -H "Content-Type: application/json" \
+             -d '{"skctest":"1"}' \
+            "https://comparewp.org/plugin-check-api/${{ matrix.plugin_slug }}-1/?api_key=$COMPAREWPORG_API_KEY&skctestquery=1" || true
             
           curl --fail-with-body -X POST \
-             -H "Content-Type: application/json" -d \
-            '{"skctest":"1"}' \
-            "https://comparewp.org/plugin-check-api/${{ matrix.plugin_slug }}-2/?api_key=${COMPAREWPORG_API_KEY}&skctest=1" || true
+             -H "Content-Type: application/json" \
+             -d '{"skctest":"1"}' \
+            "https://comparewp.org/plugin-check-api/${{ matrix.plugin_slug }}-2/?api_key=${COMPAREWPORG_API_KEY}&skctestquery=1" || true
             
           curl --fail-with-body -X POST \
-             -H "Content-Type: application/json" -d \
-            '{"skctest":"1"}' \
-            "https://comparewp.org/plugin-check-api/${{ matrix.plugin_slug }}-3/?api_key=${{ env.COMPAREWPORG_API_KEY }}&skctest=1" || true
+             -H "Content-Type: application/json" \
+             -d '{"skctest":"1"}' \
+            "https://comparewp.org/plugin-check-api/${{ matrix.plugin_slug }}-3/?api_key=${{ env.COMPAREWPORG_API_KEY }}&skctestquery=1" || true
             
           curl --fail-with-body -X POST \
-             -H "Content-Type: application/json" -d \
-            -d "$(jq -Rs '{"data":.}' < "$RESULTS_FILE")" \
-            "https://comparewp.org/plugin-check-api/${{ matrix.plugin_slug }}-4/?api_key=$COMPAREWPORG_API_KEY&skctest=1" || true
+            -H "Content-Type: application/json" \
+            -d $(jq -Rs '{"data":.}' < "$RESULTS_FILE") \
+            "https://comparewp.org/plugin-check-api/${{ matrix.plugin_slug }}-4/?api_key=$COMPAREWPORG_API_KEY&skctestquery=1" || true
             
           curl --fail-with-body -X POST \
-             -H "Content-Type: application/json" -d \
-            -d "$(jq -Rs '{"data":.}' < "$RESULTS_FILE")" \
-            "https://comparewp.org/plugin-check-api/${{ matrix.plugin_slug }}-5/?api_key=${COMPAREWPORG_API_KEY}&skctest=1" || true
+            -H "Content-Type: application/json" \
+            -d $(jq -Rs '{"data":.}' < "$RESULTS_FILE") \
+            "https://comparewp.org/plugin-check-api/${{ matrix.plugin_slug }}-5/?api_key=${COMPAREWPORG_API_KEY}&skctestquery=1" || true
             
           curl --fail-with-body -X POST \
-             -H "Content-Type: application/json" -d \
-            -d "$(jq -Rs '{"data":.}' < "$RESULTS_FILE")" \
-            "https://comparewp.org/plugin-check-api/${{ matrix.plugin_slug }}-6/?api_key=${{ env.COMPAREWPORG_API_KEY }}&skctest=1" || true
+            -H "Content-Type: application/json" \
+            -d $(jq -Rs '{"data":.}' < "$RESULTS_FILE") \
+            "https://comparewp.org/plugin-check-api/${{ matrix.plugin_slug }}-6/?api_key=${{ env.COMPAREWPORG_API_KEY }}&skctestquery=1" || true
 
           curl --fail-with-body -X POST \
             --data-binary @"$RESULTS_FILE" \
-            "https://comparewp.org/plugin-check-api/${{ matrix.plugin_slug }}-3/?api_key=${COMPAREWPORG_API_KEY}" || true
+            "https://comparewp.org/plugin-check-api/${{ matrix.plugin_slug }}-7/?api_key=${COMPAREWPORG_API_KEY}" || true
