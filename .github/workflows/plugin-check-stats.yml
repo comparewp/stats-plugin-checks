@@ -1,0 +1,36 @@
+name: Plugin Check Stats
+
+on:
+  schedule:
+    - cron: '0 0 * * 0'
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  plugin-check:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        plugin_slug:
+          - pods
+          - advanced-custom-fields
+          - secure-custom-fields
+    steps:
+      - name: Download plugin from WordPress.org
+        run: |
+          curl --fail -L "https://downloads.wordpress.org/plugin/${{ matrix.plugin_slug }}.latest-stable.zip" -o plugin.zip
+          unzip plugin.zip
+
+      - name: Run Plugin Check
+        uses: WordPress/plugin-check-action@v1
+        with:
+          build-dir: ./${{ matrix.plugin_slug }}
+          slug: ${{ matrix.plugin_slug }}
+
+      - name: POST results to API
+        run: |
+          curl --fail -X POST \
+            --data-binary @${{ runner.temp }}/plugin-check-results.txt \
+            "https://comparewp.org/plugin-check-api/${{ matrix.plugin_slug }}/"
