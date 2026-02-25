@@ -45,4 +45,4 @@ jobs:
             
           curl --fail-with-body -X POST \
             --data-binary @"$RESULTS_FILE" \
-            "https://comparewp.org/plugin-check-api/${{ matrix.plugin_slug }}/?api_key=$COMPAREWPORG_API_KEY" || true
+            "https://comparewp.org/plugin-check-api/${{ matrix.plugin_slug }}/?api_key=${COMPAREWPORG_API_KEY}" || true
