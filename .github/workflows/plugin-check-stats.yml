@@ -37,7 +37,11 @@ jobs:
             echo "Results file not found, skipping POST."
             exit 0
           fi
-          
+
+          TOTAL_ERRORS=$(grep -o '"type":"ERROR"' "$FILE" | wc -l | tr -d ' ')
+          TOTAL_WARNINGS=$(grep -o '"type":"WARNING"' "$FILE" | wc -l | tr -d ' ')
+
           curl --fail-with-body -X POST \
-            --data-urlencode "results@$RESULTS_FILE" \
+            -d "total_errors=$TOTAL_ERRORS" \
+            -d "total_warnings=$TOTAL_WARNINGS" \
             "https://comparewp.org/plugin-check-api/${{ matrix.plugin_slug }}/?api_key=${{ env.COMPAREWPORG_API_KEY }}"
