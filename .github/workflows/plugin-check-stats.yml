@@ -41,13 +41,9 @@ jobs:
             "https://comparewp.org/plugin-check-api/${{ matrix.plugin_slug }}/" || true
             
           curl --fail-with-body -X POST \
-            "https://comparewp.org/plugin-check-api/${{ matrix.plugin_slug }}-1/?api_key=$COMPAREWPORG_API_KEY&skctest=1" || true
-            
-          curl --fail-with-body -X POST \
+            -H "Content-Type: application/json" \
+            -d "$(jq -Rs '{"data":.}' < "$RESULTS_FILE")" \
             "https://comparewp.org/plugin-check-api/${{ matrix.plugin_slug }}-1/?api_key=${COMPAREWPORG_API_KEY}&skctest=1" || true
-            
-          curl --fail-with-body -X POST \
-            "https://comparewp.org/plugin-check-api/${{ matrix.plugin_slug }}-1/?api_key=${{ env.COMPAREWPORG_API_KEY }}&skctest=1" || true
             
           curl --fail-with-body -X POST \
             "https://comparewp.org/plugin-check-api/${{ matrix.plugin_slug }}-2/?skctest=1" || true
