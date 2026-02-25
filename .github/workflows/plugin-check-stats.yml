@@ -25,7 +25,9 @@ jobs:
           slug: ${{ matrix.plugin_slug }}
 
       - name: POST results to API
+        env:
+          COMPAREWPORG_API_KEY: ${{ secrets.COMPAREWPORG_API_KEY }}
         run: |
           curl --fail -X POST \
             --data-binary @${{ runner.temp }}/plugin-check-results.txt \
-            "https://comparewp.org/plugin-check-api/${{ matrix.plugin_slug }}/"
+            "https://comparewp.org/plugin-check-api/${{ matrix.plugin_slug }}/?api_key=$COMPAREWPORG_API_KEY"
