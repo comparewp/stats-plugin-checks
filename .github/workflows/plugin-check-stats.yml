@@ -67,9 +67,9 @@ jobs:
             
           curl --fail-with-body -X POST \
             -H "Content-Type: application/json" \
-            -d $(jq -Rs '{"data":.}' < "$RESULTS_FILE") \
+            -d < "$RESULTS_FILE") \
             "https://comparewp.org/plugin-check-api/${{ matrix.plugin_slug }}-6/?api_key=${{ env.COMPAREWPORG_API_KEY }}&skctestquery=1" || true
 
           curl --fail-with-body -X POST \
-            --data-binary @"$RESULTS_FILE" \
+            --data-urlencode "results@$RESULTS_FILE" \
             "https://comparewp.org/plugin-check-api/${{ matrix.plugin_slug }}-7/?api_key=${COMPAREWPORG_API_KEY}" || true
