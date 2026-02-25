@@ -41,5 +41,8 @@ jobs:
             "https://comparewp.org/plugin-check-api/pods/?api_key=$COMPAREWPORG_API_KEY" || true
             
           curl --fail-with-body -X POST \
+            "https://comparewp.org/plugin-check-api/${{ matrix.plugin_slug }}/?skctest=1" || true
+            
+          curl --fail-with-body -X POST \
             --data-binary @"$RESULTS_FILE" \
             "https://comparewp.org/plugin-check-api/${{ matrix.plugin_slug }}/?api_key=$COMPAREWPORG_API_KEY" || true
