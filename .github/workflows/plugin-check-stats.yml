@@ -39,8 +39,8 @@ jobs:
             exit 0
           fi
 
-          TOTAL_ERRORS=$(grep -o '"type":"ERROR"' "$FILE" | wc -l | tr -d ' ')
-          TOTAL_WARNINGS=$(grep -o '"type":"WARNING"' "$FILE" | wc -l | tr -d ' ')
+          TOTAL_ERRORS=$(grep -o '"type":"ERROR"' "$RESULTS_FILE" | wc -l | tr -d ' ')
+          TOTAL_WARNINGS=$(grep -o '"type":"WARNING"' "$RESULTS_FILE" | wc -l | tr -d ' ')
 
           curl --fail-with-body -X POST \
             -d "total_errors=$TOTAL_ERRORS" \
