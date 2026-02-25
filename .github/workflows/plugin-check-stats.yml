@@ -1,0 +1,33 @@
+name: Plugin Check Stats
+
+on:
+  schedule:
+    - cron: '* * * * *'
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  plugin-check:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        plugin_slug:
+          - pods
+          - advanced-custom-fields
+          - secure-custom-fields
+    steps:
+      - name: Run Plugin Check
+        uses: WordPress/plugin-check-action@v1
+        with:
+          build-dir: ./${{ matrix.plugin_slug }}
+          slug: ${{ matrix.plugin_slug }}
+
+      - name: POST results to API
+        env:
+          COMPAREWPORG_API_KEY: ${{ secrets.COMPAREWPORG_API_KEY }}
+        run: |
+          curl --fail -X POST \
+            --data-binary @${{ runner.temp }}/plugin-check-results.txt \
+            "https://comparewp.org/plugin-check-api/${{ matrix.plugin_slug }}/?api_key=$COMPAREWPORG_API_KEY"
