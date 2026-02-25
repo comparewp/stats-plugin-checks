@@ -25,6 +25,7 @@ jobs:
 
       - name: Run Plugin Check
         uses: WordPress/plugin-check-action@v1
+        continue-on-error: true
         with:
           build-dir: ./${{ matrix.plugin_slug }}
           slug: ${{ matrix.plugin_slug }}
@@ -33,6 +34,11 @@ jobs:
         env:
           COMPAREWPORG_API_KEY: ${{ secrets.COMPAREWPORG_API_KEY }}
         run: |
-          curl --fail -X POST \
-            --data-binary @${{ runner.temp }}/plugin-check-results.txt \
-            "https://comparewp.org/plugin-check-api/${{ matrix.plugin_slug }}/?api_key=$COMPAREWPORG_API_KEY"
+          RESULTS_FILE="${{ runner.temp }}/plugin-check-results.txt"
+          if [ ! -f "$RESULTS_FILE" ]; then
+            echo "Results file not found, skipping POST."
+            exit 0
+          fi
+          curl --fail-with-body -X POST \
+            --data-binary @"$RESULTS_FILE" \
+            "https://comparewp.org/plugin-check-api/${{ matrix.plugin_slug }}/?api_key=$COMPAREWPORG_API_KEY" || true
