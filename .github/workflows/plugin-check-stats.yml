@@ -18,11 +18,6 @@ jobs:
           - advanced-custom-fields
           - secure-custom-fields
     steps:
-      - name: Download plugin from WordPress.org
-        run: |
-          curl --fail -L "https://downloads.wordpress.org/plugin/${{ matrix.plugin_slug }}.latest-stable.zip" -o plugin.zip
-          unzip plugin.zip
-
       - name: Run Plugin Check
         uses: WordPress/plugin-check-action@v1
         with:
