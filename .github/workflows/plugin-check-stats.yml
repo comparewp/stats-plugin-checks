@@ -15,6 +15,7 @@ jobs:
       matrix:
         plugin_slug:
           - pods-alternative-cache
+          - pods-gravity-forms
     steps:
       - name: Download plugin from WordPress.org
         run: |
