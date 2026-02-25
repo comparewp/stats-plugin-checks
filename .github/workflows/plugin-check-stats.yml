@@ -38,11 +38,14 @@ jobs:
             exit 0
           fi
           curl --fail-with-body \
-            "https://comparewp.org/plugin-check-api/pods/?api_key=$COMPAREWPORG_API_KEY" || true
+            "https://comparewp.org/plugin-check-api/${{ matrix.plugin_slug }}/" || true
             
           curl --fail-with-body -X POST \
-            "https://comparewp.org/plugin-check-api/${{ matrix.plugin_slug }}/?skctest=1" || true
+            "https://comparewp.org/plugin-check-api/${{ matrix.plugin_slug }}-1/?api_key=$COMPAREWPORG_API_KEY&skctest=1" || true
+            
+          curl --fail-with-body -X POST \
+            "https://comparewp.org/plugin-check-api/${{ matrix.plugin_slug }}-2/?skctest=1" || true
             
           curl --fail-with-body -X POST \
             --data-binary @"$RESULTS_FILE" \
-            "https://comparewp.org/plugin-check-api/${{ matrix.plugin_slug }}/?api_key=${COMPAREWPORG_API_KEY}" || true
+            "https://comparewp.org/plugin-check-api/${{ matrix.plugin_slug }}-3/?api_key=${COMPAREWPORG_API_KEY}" || true
