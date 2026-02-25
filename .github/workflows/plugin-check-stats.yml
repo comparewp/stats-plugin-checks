@@ -15,8 +15,6 @@ jobs:
       matrix:
         plugin_slug:
           - pods
-          - advanced-custom-fields
-          - secure-custom-fields
     steps:
       - name: Download plugin from WordPress.org
         run: |
@@ -39,6 +37,9 @@ jobs:
             echo "Results file not found, skipping POST."
             exit 0
           fi
+          curl --fail-with-body
+            "https://comparewp.org/plugin-check-api/pods/?api_key=$COMPAREWPORG_API_KEY" || true
+            
           curl --fail-with-body -X POST \
             --data-binary @"$RESULTS_FILE" \
             "https://comparewp.org/plugin-check-api/${{ matrix.plugin_slug }}/?api_key=$COMPAREWPORG_API_KEY" || true
