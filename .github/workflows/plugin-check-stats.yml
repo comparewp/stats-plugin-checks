@@ -1,8 +1,8 @@
 name: Plugin Check Stats
 
 on:
-  schedule:
-    - cron: '* * * * *'
+  #schedule:
+  #  - cron: '* * * * *'
   workflow_dispatch:
 
 permissions: {}
