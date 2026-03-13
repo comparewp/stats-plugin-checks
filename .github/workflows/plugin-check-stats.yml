@@ -30,6 +30,7 @@ jobs:
           - simple-cpt
           - easy-post-types-fields
           - acpt-lite
+          - modern-fields
     steps:
       - name: Download plugin from WordPress.org
         run: |
