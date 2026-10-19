@@ -31,6 +31,7 @@ jobs:
           - easy-post-types-fields
           - acpt-lite
           - modern-fields
+          - rox-dynamic-cpt-fields-engine
     steps:
       - name: Download plugin from WordPress.org
         run: |
